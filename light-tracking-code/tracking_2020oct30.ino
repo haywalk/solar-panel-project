@@ -3,14 +3,21 @@
  * Hayden Walker, 30 October 2020
  */
 
-#include <Servo.h>
+#include <Servo.h> // Include the Arduino servo library
 
 Servo myservo; // Create a new servo object
+
+/*
+ * Define constants
+ */
 #define servoPin 9 // Define 9 as being the servo pin
+#define startPosition 30 // Set the start position
+#define maxPosition 110 // Set maximum angle
+#define margin 30 // Set sensitivity
+
 
 void setup() {
   myservo.attach(servoPin); // Attach the servo to pin 9
-  int startPosition = 30; // Set the start position
   myservo.write(startPosition); // Start with the servo at the start position
 }
 
@@ -24,20 +31,17 @@ void adjust(int currentAng){
   int valueLeft = analogRead(A1);
 
   // Check if right has more light
-  if ( (valueRight - valueLeft >= 30) and (currentAng > 0) ) {
-    currentAng -= 1;
+  if ( (valueRight - valueLeft >= margin) and (currentAng > startPosition) ) {
+    currentAng -= 1; // Move right
   }
   // Check if left side has more light
-  else if ( (valueLeft - valueRight >= 30) and (currentAng < 130) ) {
-    currentAng += 1;
+  else if ( (valueLeft - valueRight >= margin) and (currentAng < maxPosition) ) {
+    currentAng += 1; // Move left
   }
 
-  // Move the servo to its new position
-  myservo.write(currentAng);
+  myservo.write(currentAng); // Move the servo to its new position
+  delay(100); // Wait 100ms
 
-  // Wait 100ms
-  delay(100);
-
-  // Recurse and set the new angle as the current one
+  // Recurse and make the new angle the current one
   adjust(currentAng);
 }
