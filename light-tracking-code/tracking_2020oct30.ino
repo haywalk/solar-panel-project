@@ -5,20 +5,20 @@
 
 #include <Servo.h> // Include the Arduino servo library
 
-Servo myservo; // Create a new servo object
+Servo myServo; // Create a new servo object
 
 /*
  * Define constants
  */
-#define servoPin 9 // Define 9 as being the servo pin
-#define startPosition 30 // Set the start position
-#define maxPosition 110 // Set maximum angle
-#define margin 30 // Set sensitivity
+#define servoPin        9   // Define 9 as being the servo pin
+#define startPosition   30  // Set the start position
+#define maxPosition     110 // Set maximum angle
+#define margin          30  // Set sensitivity
 
 
 void setup() {
-  myservo.attach(servoPin); // Attach the servo to pin 9
-  myservo.write(startPosition); // Start with the servo at the start position
+  myServo.attach(servoPin); // Attach the servo to pin 9
+  myServo.write(startPosition); // Start with the servo at the start position
 }
 
 void loop() {
@@ -39,7 +39,7 @@ void adjust(int currentAng){
     currentAng += 1; // Move left
   }
 
-  myservo.write(currentAng); // Move the servo to its new position
+  myServo.write(currentAng); // Move the servo to its new position
   delay(100); // Wait 100ms
 
   // Recurse and make the new angle the current one
